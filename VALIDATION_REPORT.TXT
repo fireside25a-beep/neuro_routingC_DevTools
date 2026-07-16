@@ -1,0 +1,338 @@
+NEUROROUTE DEVCLI v0.4.0 VALIDATION REPORT
+===========================================
+
+Validation date: 2026-07-16
+Release name: neuroroute-devcli-v0.4.0
+Release type: source-only C11 project
+
+FINAL STATUS
+------------
+
+The source release is complete and package validation passed.
+
+PASS: Original routing and spatial-pool behavior preserved.
+PASS: Original project built and ran with GCC and Clang.
+PASS: New project built with strict C11 warnings and -Werror under GCC and Clang.
+PASS: All old and new unit tests passed under GCC and Clang.
+PASS: CLI smoke tests passed.
+PASS: GCC AddressSanitizer and UndefinedBehaviorSanitizer suite passed.
+PASS: Source-only ZIP package rebuilt and passed tests with GCC.
+PASS: Source-only tar.gz package rebuilt and passed tests with Clang.
+FAIL: The installed Clang 17 ASan runtime crashed at process startup on this host.
+      The same crash occurred for an independent one-line C program before main(),
+      so this is recorded as a host/toolchain-runtime failure, not hidden as a pass.
+SKIPPED: Rust runtime validation because cargo is not installed.
+SKIPPED: Zig runtime validation because zig is not installed.
+SKIPPED: macOS runtime validation because this execution host is Linux.
+
+SOURCE ARCHIVE INSPECTION
+-------------------------
+
+Uploaded archive: neuroroute-c(1).zip
+Uploaded archive SHA-256:
+55fee8a4ed0830fbe5b8b2b543dab4323cf90880c3582e919aa5f0a8047e3e6c
+
+Archive entries: 20
+Path traversal entries: 0
+Symlink entries: 0
+Original uploaded archive modified: NO
+
+Original archive tree:
+
+neuroroute-c/
+|-- .generated_by_neuro_router_builder
+|-- .gitignore
+|-- LICENSE
+|-- Makefile
+|-- README.md
+|-- examples/
+|   `-- demo.c
+|-- include/
+|   |-- asm/
+|   |   `-- primitives.h
+|   |-- mm/
+|   |   `-- spatial_pool.h
+|   `-- neuro.h
+|-- src/
+|   |-- routing.c
+|   `-- spatial_pool.c
+`-- tests/
+    |-- test_routing.c
+    `-- test_spatial_pool.c
+
+SOURCE AND SECURITY SCAN
+------------------------
+
+Original source scan:
+PASS: No LumusMaxima/private-project names detected.
+PASS: No credentials, API keys, private keys, passwords, or private URLs detected.
+PASS: No unexpected network calls detected.
+PASS: No system(), popen(), sh -c, or bash -c process launching detected.
+
+New source scan:
+PASS: No LumusMaxima/private-project names detected.
+PASS: No credentials, API keys, private keys, passwords, or private URLs detected.
+PASS: No product network calls detected.
+PASS: Product child processes use posix_spawnp() and waitpid().
+PASS: No product use of system(), popen(), sh -c, or bash -c.
+PASS: README.md is ASCII-only.
+
+A broad keyword scan matched the ordinary local variable name "token" in the
+interactive parser and the README security section that documents forbidden
+shell-launch functions. These were inspected and are not secrets or unsafe calls.
+
+GITHUB HANDLING
+---------------
+
+The provided GitHub repository and README were inspected as a read-only reference.
+GitHub was not used as the editable working copy.
+No push, commit, branch, pull request, release, issue, or repository modification
+was performed.
+
+HOST ENVIRONMENT
+----------------
+
+OS: Debian GNU/Linux 13 (trixie)
+Kernel: Linux 4.4.0
+Architecture: x86_64
+CPU count reported by host: 56
+GNU Make: 4.4.1
+GNU ar: 2.44
+
+Installed language tools:
+
+Clang: 17.0.0
+GCC: 14.2.0
+Clang++: 17.0.0
+G++: 14.2.0
+Python: 3.13.5
+Node.js: 22.16.0
+npm: 10.9.2
+Go: 1.23.2
+javac: 21.0.10
+java: OpenJDK 21.0.10
+cargo: not installed
+zig: not installed
+
+UNTOUCHED ORIGINAL BASELINE
+---------------------------
+
+GCC 14.2.0:
+PASS: make clean
+PASS: make
+PASS: make test
+PASS: make demo
+
+Clang 17.0.0:
+PASS: make clean
+PASS: make
+PASS: make test
+PASS: make demo
+
+Original runtime output:
+
+routing tests: PASS
+spatial pool tests: PASS
+Selected route target: 1002
+Selected spatial page: 8192
+
+NEW PROJECT BUILD AND TEST RESULTS
+----------------------------------
+
+Strict compile flags:
+-std=c11 -Wall -Wextra -Wpedantic -Werror
+
+GCC 14.2.0:
+PASS: make clean
+PASS: make
+PASS: make test
+PASS: make demo
+
+Clang 17.0.0:
+PASS: make clean
+PASS: make
+PASS: make test
+PASS: make demo
+
+Unit and smoke test output:
+
+routing tests: PASS
+spatial pool tests: PASS
+process runner tests: PASS
+project detect tests: PASS
+project init tests: PASS
+CLI smoke tests: PASS
+Selected route target: 1002
+Selected spatial page: 8192
+
+SANITIZER RESULTS
+-----------------
+
+GCC 14.2.0 with AddressSanitizer and UndefinedBehaviorSanitizer:
+PASS: routing tests
+PASS: spatial-pool tests
+PASS: process-runner tests
+PASS: project-detection tests
+PASS: project-initialization tests
+PASS: original demo
+PASS: CLI smoke tests
+
+Clang 17.0.0 with AddressSanitizer and UndefinedBehaviorSanitizer:
+FAIL: sanitizer runtime crashed before the first project test executed.
+
+Independent confirmation:
+A one-line C program compiled by the same Clang with
+-fsanitize=address,undefined also exited with status 1 and reported
+AddressSanitizer:DEADLYSIGNAL before main().
+
+CLI COMMAND VALIDATION
+----------------------
+
+PASS: neuro help, exit 0
+PASS: neuro status, exit 0
+PASS: neuro detect <valid path>, exit 0
+PASS: unknown command rejected, exit 2
+PASS: missing path rejected, exit 1
+PASS: ambiguous project reported, exit 3
+PASS: missing C compiler reported, exit 127
+PASS: child process success returned exit 0
+PASS: child process failure preserved real exit 7
+PASS: non-empty init destination rejected, exit 1
+PASS: editor invocation with EDITOR=true, exit 0
+PASS: interactive status/detect/quit sequence, exit 0
+PASS: neuro clean on installed-language generated projects
+
+PROJECT DETECTION
+-----------------
+
+Deterministic evidence priority:
+1. Language-specific manifests
+2. Source-file extensions
+3. Generic Makefile as weak C evidence
+
+Equal-priority conflicts are reported as ambiguous. A C++ source project with a
+generic Makefile is detected as C++, while a directory containing only main.c
+and main.py is reported as ambiguous.
+
+GENERATED PROJECTS
+------------------
+
+All supported starter layouts were generated in a clean temporary workspace:
+
+c/main.c
+cpp/main.cpp
+python/main.py
+rust/Cargo.toml
+rust/src/main.rs
+javascript/main.js
+go/go.mod
+go/main.go
+zig/main.zig
+java/Main.java
+
+Every generated program contains the expected message:
+Hello from NeuroRoute DevCLI
+
+LANGUAGE RUNTIME MATRIX
+-----------------------
+
+C / Clang 17.0.0
+PASS: build, run, test
+Runtime output: Hello from NeuroRoute DevCLI
+Exit status: 0
+
+C / GCC 14.2.0
+PASS: build, run, test
+Runtime output: Hello from NeuroRoute DevCLI
+Exit status: 0
+
+C++ / Clang++ 17.0.0
+PASS: build, run, test
+Runtime output: Hello from NeuroRoute DevCLI
+Exit status: 0
+
+C++ / G++ 14.2.0
+PASS: build, run, test
+Runtime output: Hello from NeuroRoute DevCLI
+Exit status: 0
+
+Python 3.13.5
+PASS: build, run, test, clean
+Runtime output: Hello from NeuroRoute DevCLI
+Exit status: 0
+
+JavaScript / Node.js 22.16.0
+PASS: build, run, test, clean
+Runtime output: Hello from NeuroRoute DevCLI
+Exit status: 0
+
+npm 10.9.2
+PASS: detected as an optional JavaScript package tool.
+The generated one-file JavaScript project did not require npm.
+
+Go 1.23.2
+PASS: build, run, test, clean
+Runtime output: Hello from NeuroRoute DevCLI
+Test output: [no test files]
+Exit status: 0
+
+Java / OpenJDK 21.0.10
+PASS: build, run, test, clean
+Runtime output: Hello from NeuroRoute DevCLI
+Exit status: 0
+
+Rust
+SKIPPED: cargo not installed
+CLI output: neuro: required Rust toolchain is not installed or not executable
+Exit status: 127
+
+Zig
+SKIPPED: zig not installed
+CLI output: neuro: required Zig toolchain is not installed or not executable
+Exit status: 127
+
+PACKAGE CONTENT POLICY
+----------------------
+
+PASS: Source-only archives contain 31 files and 7 directories.
+PASS: No build/, bin/, or lib/ directories are included.
+PASS: No object files, static libraries, executables, class files, pyc files,
+      compiler caches, generated test workspaces, macOS metadata, or secrets are
+      included.
+PASS: ZIP and tar.gz extractions contain identical source-file hashes.
+
+FINAL PACKAGE REBUILD
+---------------------
+
+ZIP extraction:
+PASS: clean extraction
+PASS: GCC build
+PASS: all unit tests and CLI smoke tests
+PASS: original demo
+PASS: packaged neuro help/status/detect
+PASS: packaged C starter generation, build, and run
+PASS: packaged Python starter generation and run
+
+TAR.GZ extraction:
+PASS: clean extraction
+PASS: Clang build
+PASS: all unit tests and CLI smoke tests
+PASS: original demo
+PASS: packaged neuro detect
+PASS: packaged C++ starter generation, build, and run
+PASS: packaged JavaScript starter generation and run
+
+RELEASE ARCHIVE SHA-256
+-----------------------
+
+neuroroute-devcli-v0.4.0.zip
+8d6772125294f630fcd7df93145f3ce6fa1d1ac33600e5488c0cebfe17894d29
+
+neuroroute-devcli-v0.4.0.tar.gz
+3e0a116c7afff486193db7a0526aed27fa227db76e5e80557ba30cfe073d5551
+
+FINAL STATEMENT
+---------------
+
+The release was implemented and validated in an isolated temporary workspace.
+The original uploaded ZIP remains unchanged. GitHub was not modified.
