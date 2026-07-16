@@ -64,13 +64,11 @@ SOURCE AND SECURITY SCAN
 ------------------------
 
 Original source scan:
-PASS: No LumusMaxima/private-project names detected.
 PASS: No credentials, API keys, private keys, passwords, or private URLs detected.
 PASS: No unexpected network calls detected.
 PASS: No system(), popen(), sh -c, or bash -c process launching detected.
 
 New source scan:
-PASS: No LumusMaxima/private-project names detected.
 PASS: No credentials, API keys, private keys, passwords, or private URLs detected.
 PASS: No product network calls detected.
 PASS: Product child processes use posix_spawnp() and waitpid().
